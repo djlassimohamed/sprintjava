@@ -33,8 +33,9 @@ public class Pi {
        //sp.modifierPost(10, p);
        //sp.afficherPost();
        //sp.supprimerPost(10);
-       //sp.dislike(4, 4);
-       sp.recherche("Nutrition");
+       //sp.like(1, 2);
+       //sp.recherche("categorie");
+       sp.triparlike();
         //commentaire com = new commentaire("commentaire", Date.valueOf("2021-04-10"));
        //CommentService cs = new CommentService();
         //cs.ajouterCommentaire(com, 2, 9);

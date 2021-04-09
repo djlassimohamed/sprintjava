@@ -143,5 +143,28 @@ public class PostService {
          }
      }
      
-
+     public void triparlike(){
+     
+     PreparedStatement pt;
+             
+         try {
+             pt = c.prepareStatement
+             ("select * from post p INNER JOIN likes l on (p.id=l.post_id) GROUP BY post_id ORDER by COUNT(*) DESC");
+              ResultSet rs = pt.executeQuery();
+               while (rs.next()) {
+                System.out.println("Post id :" + rs.getInt(1) + 
+                                  /* ", User: "+rs.getInt(2)+*/
+                                   " , Sujet : " + rs.getString(3) + 
+                                   " , Description : " + rs.getString(4) +
+                                   " , Date : "+rs.getDate(5)+
+                                   " , Catégorie : " +rs.getString(6)
+                                   );
+            }
+         } catch (SQLException ex) {
+             Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     
+     }
+     
+     
 }
