@@ -6,6 +6,7 @@
 package entities;
 
 import java.sql.Date;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -19,10 +20,10 @@ public class post {
     private Date date;
     private String categorie;
     private int user_id;
+
     
 
   
-
     public post() {
     }
 
@@ -42,9 +43,9 @@ public class post {
         this.categorie = categorie;
         this.user_id = user_id;
     }
-    
-    
 
+
+    
     public int getId() {
         return id;
     }
@@ -92,6 +93,6 @@ public class post {
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
-    
-    
+
+  
 }
