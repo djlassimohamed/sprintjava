@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -40,6 +41,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.CommentService;
+import services.PostService;
 import utils.ConnectionDB;
 
 /**
@@ -60,18 +62,34 @@ public class PostShowController implements Initializable {
     private TableColumn<post, String> col_desc;
     @FXML
     private TextField search;
-    @FXML
-    private TableColumn col_details;
 
     ObservableList<post> oblist = FXCollections.observableArrayList();
-    @FXML
-    private Label des;
-    @FXML
     private Label desclabel;
     @FXML
-    private TextArea comment;
+    private Button viewmore;
     @FXML
-    private Button com_btn;
+    private Button create_post;
+    @FXML
+    private Button delete_btn;
+
+    @FXML
+    public void changeSceneToDetailedPersonView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("postDetails.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //access the controller and call a method
+        PostDetailsController controller = loader.getController();
+        controller.initData(table.getSelectionModel().getSelectedItem());
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +101,8 @@ public class PostShowController implements Initializable {
 
             while (rs.next()) {
 
-                oblist.add(new post(rs.getString("sujet"),
+                oblist.add(new post(rs.getInt("id"),
+                        rs.getString("sujet"),
                         rs.getString("description"),
                         rs.getDate("date"),
                         rs.getString("categorie"),
@@ -101,54 +120,6 @@ public class PostShowController implements Initializable {
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
         col_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        Callback<TableColumn<post, String>, TableCell<post, String>> cellFactory
-                = (param) -> {
-                    final TableCell<post, String> cell = new TableCell<post, String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                        setText(null);
-                    } else {
-                        final Button detailsButton = new Button("Details");
-                        detailsButton.setOnAction(event -> {
-
-                            /*Alert a = new Alert(Alert.AlertType.INFORMATION);
-                            a.setContentText("Vous avez choisi \n" + p.getSujet());
-                            a.show();*/
-                            post p = table.getSelectionModel().selectedItemProperty().get();
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("postDetails.fxml"));
-
-                            try {
-                                Parent root;
-                                root = loader.load();
-                                Scene scene = new Scene(root);
-
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                window.setScene(scene);
-                                window.show();
-
-                            } catch (IOException ex) {
-                                Logger.getLogger(PostShowController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                        });
-
-                        setGraphic(detailsButton);
-                        setText(null);
-
-                    }
-
-                }
-
-            };
-                    return cell;
-                };
-
-        col_details.setCellFactory(cellFactory);
-
         table.setItems(oblist);
 
         FilteredList<post> filteredData = new FilteredList<>(oblist, b -> true);
@@ -161,11 +132,11 @@ public class PostShowController implements Initializable {
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if (post.getSujet().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true; 
+                    return true;
                 } else if (post.getCategorie().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true; 
+                    return true;
                 } else {
-                    return false; 
+                    return false;
                 }
             });
         });
@@ -191,22 +162,82 @@ public class PostShowController implements Initializable {
 
     }
 
-    
-    private void comment(ActionEvent event) {
-       /* post p = table.getSelectionModel().getSelectedItem();
-        
-        int i=p.getId();
-        System.out.println(i);
-        String com=comment.getText();
-        Date date = new Date(System.currentTimeMillis());
-        commentaire c=new commentaire(com, date);
-        CommentService cs= new CommentService();*/
-        //cs.ajouterCommentaire(c, 5, i);
+    @FXML
+    private void create(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("add post.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+    }
+
+    @FXML
+    private void delete(ActionEvent event) {
+        ObservableList<post> selectedRows, allPost;
+        allPost = table.getItems();
+        selectedRows = table.getSelectionModel().getSelectedItems();
+        post p = table.getSelectionModel().getSelectedItem();
+        PostService sp = new PostService();
+        System.out.println(p.getId());
+        sp.supprimerPost(p.getId());
+        refreshtable();
+    }
+
+    public void refreshtable() {
+        oblist.clear();
+        try {
+            Connection c = ConnectionDB.getInstance().getCnx();
+            ResultSet rs = c.createStatement().executeQuery("select * from post");
+
+            while (rs.next()) {
+
+                oblist.add(new post(rs.getInt("id"),
+                        rs.getString("sujet"),
+                        rs.getString("description"),
+                        rs.getDate("date"),
+                        rs.getString("categorie"),
+                        rs.getInt("user_id")
+                ));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PostShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @FXML
+    public void triparlike() {
+        oblist.clear();
+               
+        PreparedStatement pt;
+
+        try {
+            Connection c = ConnectionDB.getInstance().getCnx();
+            pt = c.prepareStatement("select * from post p INNER JOIN likes l on "
+                    + "(p.id=l.post_id) GROUP BY post_id ORDER by COUNT(*) DESC");
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+                oblist.add(new post(rs.getInt("id"),
+                        rs.getString("sujet"),
+                        rs.getString("description"),
+                        rs.getDate("date"),
+                        rs.getString("categorie"),
+                        rs.getInt("user_id")
+                ));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
-    
-    
-    
-    
 }

@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="537.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.PostShowController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.PostShowController">
    <children>
-      <TableView fx:id="table" layoutY="62.0" onMouseClicked="#mouseClick" prefHeight="338.0" prefWidth="376.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
+      <TableView fx:id="table" layoutY="62.0" onMouseClicked="#mouseClick" prefHeight="475.0" prefWidth="689.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
         <columns>
           <TableColumn fx:id="col_suj" prefWidth="75.0" text="Sujet" />
           <TableColumn fx:id="col_cat" prefWidth="75.0" text="Catégorie" />
             <TableColumn fx:id="col_date" prefWidth="75.0" text="Date" />
             <TableColumn fx:id="col_desc" prefWidth="396.0" text="Description" />
-            <TableColumn fx:id="col_details" prefWidth="67.0" text="Details" />
         </columns>
       </TableView>
       <TextField fx:id="search" layoutX="14.0" layoutY="24.0" promptText="Rechercher" />
+      <Button fx:id="viewmore" layoutX="556.0" layoutY="24.0" mnemonicParsing="false" onAction="#changeSceneToDetailedPersonView" text="Voir plus" />
+      <Button fx:id="create_post" layoutX="461.0" layoutY="24.0" mnemonicParsing="false" onAction="#create" text="Créer post" />
+      <Button fx:id="delete_btn" layoutX="634.0" layoutY="24.0" mnemonicParsing="false" onAction="#delete" text="Supprimer" />
+      <Button fx:id="tri" layoutX="371.0" layoutY="24.0" mnemonicParsing="false" onAction="#triparlike" text="Tri" />
    </children>
 </AnchorPane>

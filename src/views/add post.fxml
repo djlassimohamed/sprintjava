@@ -6,11 +6,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AddPostController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AddPostController">
    <children>
       <TextField fx:id="sujet" layoutX="111.0" layoutY="73.0" promptText="sujet" />
       <TextArea fx:id="desc" layoutX="110.0" layoutY="155.0" prefHeight="200.0" prefWidth="200.0" promptText="Description" />
       <ChoiceBox fx:id="categorie" layoutX="110.0" layoutY="114.0" prefWidth="150.0" />
       <Button fx:id="add" layoutX="290.0" layoutY="361.0" mnemonicParsing="false" onAction="#ajouter" text="Create Post" />
+      <Button fx:id="all" layoutX="472.0" layoutY="73.0" mnemonicParsing="false" onAction="#All" text="All Posts" />
    </children>
 </AnchorPane>
