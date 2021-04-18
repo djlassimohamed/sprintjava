@@ -104,21 +104,19 @@ public class PostDetailsController implements Initializable {
         PreparedStatement pt;
         try {
             Connection c = ConnectionDB.getInstance().getCnx();
-            pt = c.prepareStatement("select * from commentaire where post_id=?");
-            pt.setInt(1, 1);
-            ResultSet rs = pt.executeQuery();
-            //ResultSet rs = c.createStatement().executeQuery("select * from commentaire");
+            
+            ResultSet rs = c.createStatement().executeQuery("select * from commentaire");
 
             while (rs.next()) {
-                oblist.add(new commentaire(rs.getString("description"),
+               /* oblist.add(new commentaire(rs.getString("description"),
                         rs.getDate("date")
-                ));
+                ));*/
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(PostDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+      
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
         col_contenu.setCellValueFactory(new PropertyValueFactory<>("description"));
 
@@ -142,7 +140,7 @@ public class PostDetailsController implements Initializable {
 
     @FXML
     private void comment(ActionEvent event) {
-
+        refreshtable();
         String com = commentaire.getText();
 
         Date date = new Date(System.currentTimeMillis());
@@ -160,7 +158,7 @@ public class PostDetailsController implements Initializable {
         try {
             Connection c = ConnectionDB.getInstance().getCnx();
             pt = c.prepareStatement("select * from commentaire where post_id=?");
-            pt.setInt(1, 1);
+            pt.setInt(1, selectedPost.getId());
             ResultSet rs = pt.executeQuery();
             //ResultSet rs = c.createStatement().executeQuery("select * from commentaire");
 
