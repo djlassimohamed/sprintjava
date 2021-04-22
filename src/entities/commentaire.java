@@ -39,6 +39,12 @@ public class commentaire {
         this.date = date;
     }
 
+    public commentaire(int id, String description, Date date) {
+        this.id = id;
+        this.description = description;
+        this.date = date;
+    }
+
     
     
     public commentaire() {

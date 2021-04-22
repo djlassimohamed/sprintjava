@@ -29,8 +29,9 @@ import services.PostService;
 /**
  * FXML Controller class
  *
+ * @author taieb
  */
-public class AddPostController implements Initializable {
+public class UpdatePostController implements Initializable {
 
     @FXML
     private TextField sujet;
@@ -40,22 +41,45 @@ public class AddPostController implements Initializable {
     private ChoiceBox<String> categorie;
     @FXML
     private Button add;
+    @FXML
+    private Button all;
+    @FXML
+    private TextField id_txt;
+    @FXML
+    private Button upd;
 
     /**
      * Initializes the controller class.
      */
     ObservableList<String> obs = FXCollections.observableArrayList("Sport", "Nutriton");
-    @FXML
-    private Button all;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        categorie.setItems(obs);
+        // TODO
+          categorie.setItems(obs);
+    }    
+
+   
+
+    @FXML
+    private void All(ActionEvent event) throws IOException {
+         FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("postShow.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+        
+        
     }
 
     @FXML
-    private void ajouter(ActionEvent event) throws IOException {
-
+    private void update(ActionEvent event) throws IOException {
+        String id = id_txt.getText();
+        int id_post = Integer.parseInt(id);
         String suj = sujet.getText();
         String descr = desc.getText();
         String cat = categorie.getValue();
@@ -63,7 +87,7 @@ public class AddPostController implements Initializable {
 
         post p = new post(suj, descr, date, cat, 2);
         PostService sp = new PostService();
-        sp.ajouterPost(p);
+        sp.modifierPost(id_post, p);
         
         
         FXMLLoader loader = new FXMLLoader();
@@ -76,20 +100,7 @@ public class AddPostController implements Initializable {
 
         window.setScene(tableViewScene);
         window.show();
+        
     }
-
-    @FXML
-    private void All(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("postShow.fxml"));
-        Parent tableViewParent = loader.load();
-
-        Scene tableViewScene = new Scene(tableViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
-    }
-
+    
 }

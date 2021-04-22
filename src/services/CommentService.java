@@ -44,6 +44,8 @@ public class CommentService {
             pt.setString(1, co.getDescription());
             pt.setInt(2, id);
             pt.executeUpdate();
+                        System.out.println("comment updated");
+
         } catch (SQLException ex) {
             Logger.getLogger(CommentService.class.getName()).log(Level.SEVERE, null, ex);
         }

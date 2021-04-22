@@ -29,10 +29,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import services.CommentService;
 import services.PostService;
@@ -82,10 +84,15 @@ public class PostDetailsController implements Initializable {
      * Initializes the controller class.
      */
     private post selectedPost;
+    private commentaire selectedcommentaire;
     @FXML
     private Button like_btn;
     @FXML
     private Button dislike_btn;
+    @FXML
+    private Button update_btn;
+    @FXML
+    private Button modif;
 
     public void initData(post p) {
         selectedPost = p;
@@ -101,26 +108,13 @@ public class PostDetailsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        PreparedStatement pt;
-        try {
-            Connection c = ConnectionDB.getInstance().getCnx();
-            
-            ResultSet rs = c.createStatement().executeQuery("select * from commentaire");
-
-            while (rs.next()) {
-               /* oblist.add(new commentaire(rs.getString("description"),
-                        rs.getDate("date")
-                ));*/
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
         col_contenu.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         tab_com.setItems(oblist);
+        tab_com.setEditable(true);
+        col_contenu.setCellFactory(TextFieldTableCell.forTableColumn());
+       
     }
 
     @FXML
@@ -140,7 +134,7 @@ public class PostDetailsController implements Initializable {
 
     @FXML
     private void comment(ActionEvent event) {
-        refreshtable();
+        
         String com = commentaire.getText();
 
         Date date = new Date(System.currentTimeMillis());
@@ -151,8 +145,7 @@ public class PostDetailsController implements Initializable {
 
     }
 
-    
-    public void refreshtable(){
+    public void refreshtable() {
         oblist.clear();
         PreparedStatement pt;
         try {
@@ -163,9 +156,10 @@ public class PostDetailsController implements Initializable {
             //ResultSet rs = c.createStatement().executeQuery("select * from commentaire");
 
             while (rs.next()) {
-                oblist.add(new commentaire(rs.getString("description"),
-                                           rs.getDate("date")
-                ));
+                oblist.add(new commentaire(
+                        rs.getInt("id"),
+                        rs.getString("description"),
+                        rs.getDate("date")));
             }
 
         } catch (SQLException ex) {
@@ -176,13 +170,44 @@ public class PostDetailsController implements Initializable {
     @FXML
     private void like(ActionEvent event) {
         PostService ps = new PostService();
-        ps.like(4, selectedPost.getId() );
+        ps.like(4, selectedPost.getId());
     }
 
     @FXML
     private void dislike(ActionEvent event) {
         PostService ps = new PostService();
-        ps.dislike(4, selectedPost.getId() );
+        ps.dislike(4, selectedPost.getId());
+    }
+
+  
+
+    @FXML
+    private void update(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("updatePost.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+    }
+
+    @FXML
+    private void modifcomm(ActionEvent event) {
+        selectedcommentaire = tab_com.getSelectionModel().getSelectedItem();
+        int idcommentaire = selectedcommentaire.getId();
+        System.out.println(idcommentaire);
+        String com = commentaire.getText();
+
+        Date date = new Date(System.currentTimeMillis());
+        commentaire c = new commentaire(com, date);
+        CommentService cs = new CommentService();
+        cs.modifierCommentaire(c, idcommentaire);
+        refreshtable();
     }
     
+
 }

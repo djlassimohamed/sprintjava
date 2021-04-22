@@ -52,5 +52,7 @@
       <Button fx:id="back" layoutX="515.0" layoutY="21.0" mnemonicParsing="false" onAction="#Back" text="Back" />
       <Button fx:id="like_btn" layoutX="350.0" layoutY="46.0" mnemonicParsing="false" onAction="#like" text="Like" />
       <Button fx:id="dislike_btn" layoutX="427.0" layoutY="46.0" mnemonicParsing="false" onAction="#dislike" text="Dislike" />
+      <Button fx:id="update_btn" layoutX="182.0" layoutY="234.0" mnemonicParsing="false" onAction="#update" text="Update" />
+      <Button fx:id="modif" layoutX="232.0" layoutY="474.0" mnemonicParsing="false" onAction="#modifcomm" text="Modifier" />
    </children>
 </AnchorPane>
