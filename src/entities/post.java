@@ -44,6 +44,10 @@ public class post {
         this.user_id = user_id;
     }
 
+    public post(int user_id) {
+        this.user_id = user_id;
+    }
+
 
     
     public int getId() {

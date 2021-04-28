@@ -183,12 +183,20 @@ public class PostDetailsController implements Initializable {
 
     @FXML
     private void update(ActionEvent event) throws IOException {
+        
+        
+        
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("updatePost.fxml"));
         Parent tableViewParent = loader.load();
+        
 
         Scene tableViewScene = new Scene(tableViewParent);
 
+        UpdatePostController controller = loader.getController();
+        controller.initData(selectedPost.getId());
+        
+        
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);

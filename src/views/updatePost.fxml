@@ -12,12 +12,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.UpdatePostController">
    <children>
+      <Label fx:id="id_txt" layoutX="152.0" layoutY="98.0" text="Label" />
       <ImageView fitHeight="568.0" fitWidth="759.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@bg.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="id_txt" layoutX="121.0" layoutY="102.0" promptText="Put your post ID here" />
       <TextField fx:id="sujet" layoutX="121.0" layoutY="141.0" promptText="sujet" />
       <TextArea fx:id="desc" layoutX="117.0" layoutY="225.0" prefHeight="200.0" prefWidth="445.0" promptText="Description" />
       <ChoiceBox fx:id="categorie" layoutX="121.0" layoutY="182.0" prefWidth="150.0" />

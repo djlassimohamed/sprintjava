@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,6 +39,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.CommentService;
@@ -71,6 +73,10 @@ public class PostShowController implements Initializable {
     private Button create_post;
     @FXML
     private Button delete_btn;
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private Button tri;
 
     @FXML
     public void changeSceneToDetailedPersonView(ActionEvent event) throws IOException {
@@ -121,6 +127,17 @@ public class PostShowController implements Initializable {
         col_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         table.setItems(oblist);
+
+        int pagina = 1;
+        if (oblist.size() % filaPorPagina() == 0) {
+            pagina = oblist.size() / filaPorPagina();
+        } else if (oblist.size() > filaPorPagina()) {
+            pagina = oblist.size() / filaPorPagina();
+
+        }
+        pagination.setPageCount(pagina);
+        pagination.setCurrentPageIndex(0);
+        pagination.setPageFactory(this::createPagination);
 
         FilteredList<post> filteredData = new FilteredList<>(oblist, b -> true);
 
@@ -216,7 +233,7 @@ public class PostShowController implements Initializable {
     @FXML
     public void triparlike() {
         oblist.clear();
-               
+
         PreparedStatement pt;
 
         try {
@@ -232,12 +249,23 @@ public class PostShowController implements Initializable {
                         rs.getString("categorie"),
                         rs.getInt("user_id")
                 ));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+    }
+
+    public int filaPorPagina() {
+        return 3;
+    }
+
+    private Node createPagination(int pageIndex) {
+        int fromIndex = pageIndex * filaPorPagina();
+        int toIndex = Math.min(fromIndex + filaPorPagina(), oblist.size());
+        table.setItems(FXCollections.observableArrayList(oblist.subList(fromIndex, toIndex)));
+        return new BorderPane(table);
     }
 
 }
