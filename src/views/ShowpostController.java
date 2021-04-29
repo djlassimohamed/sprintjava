@@ -50,7 +50,7 @@ import utils.ConnectionDB;
  * FXML Controller class
  *
  */
-public class PostShowController implements Initializable {
+public class ShowpostController implements Initializable {
 
     @FXML
     private TableView<post> table;
@@ -103,7 +103,7 @@ public class PostShowController implements Initializable {
         try {
             Connection c = ConnectionDB.getInstance().getCnx();
 
-            ResultSet rs = c.createStatement().executeQuery("select * from post");
+            ResultSet rs = c.createStatement().executeQuery("select * from post order by id desc LIMIT 3 ");
 
             while (rs.next()) {
 
@@ -129,7 +129,7 @@ public class PostShowController implements Initializable {
         table.setItems(oblist);
   //      table.setItems(FXCollections.observableArrayList(oblist.subList(fromIndex, toIndex)));
 
-        int pagina = 1;
+  /*      int pagina = 1;
         if (oblist.size() % filaPorPagina() == 0) {
             pagina = oblist.size() / filaPorPagina();
         } else if (oblist.size() > filaPorPagina()) {
@@ -139,7 +139,7 @@ public class PostShowController implements Initializable {
         pagination.setPageCount(pagina);
         pagination.setCurrentPageIndex(0);
         pagination.setPageFactory(this::createPagination);
-       
+       */
 
         FilteredList<post> filteredData = new FilteredList<>(oblist, b -> true);
 
@@ -212,7 +212,7 @@ public class PostShowController implements Initializable {
         oblist.clear();
         try {
             Connection c = ConnectionDB.getInstance().getCnx();
-            ResultSet rs = c.createStatement().executeQuery("select * from post");
+            ResultSet rs = c.createStatement().executeQuery("select * from post  LIMIT 3");
 
             while (rs.next()) {
 

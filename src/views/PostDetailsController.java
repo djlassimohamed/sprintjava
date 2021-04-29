@@ -96,7 +96,6 @@ public class PostDetailsController implements Initializable {
 
     public void initData(post p) {
         selectedPost = p;
-        id_p.setText(String.valueOf(selectedPost.getId()));
         suj.setText(selectedPost.getSujet());
         cat.setText(selectedPost.getCategorie());
         dat.setText(selectedPost.getDate().toString());

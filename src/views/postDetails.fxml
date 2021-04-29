@@ -53,8 +53,6 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Label>
-            <Label fx:id="lab_id" text="ID" />
-            <Label fx:id="id_p" text="Label" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Button fx:id="back" layoutX="645.0" layoutY="14.0" mnemonicParsing="false" onAction="#Back" text="Back" />
