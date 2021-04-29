@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import utils.ConnectionDB;
 
 /**
@@ -138,7 +140,13 @@ public class PostService {
             System.out.println("post liked");
 
         } catch (SQLException ex) {
-            Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("post already liked");
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setContentText("Post Already Liked");
+
+            alert.showAndWait();
+            
         }
     }
 
@@ -153,7 +161,12 @@ public class PostService {
             System.out.println("post disliked");
 
         } catch (SQLException ex) {
-            Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("post already disliked");
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setContentText("Post Already Disliked");
+
+            alert.showAndWait();
         }
     }
 
