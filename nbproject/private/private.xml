@@ -5,15 +5,19 @@
         <group>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/services/CommentService.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/javafxsocketprogramming/ServerJavaFX.java</file>
+            <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/postShow.fxml</file>
+            <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/ShowpostController.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/UpdatePostController.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/javafxsocketprogramming/TaskClientConnection.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/PostShowController.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/javafxsocketprogramming/TaskReadThread.java</file>
+            <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/Main.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/javafxsocketprogramming/ConnectionUtil.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/PostDetailsController.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/AddPostController.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/javafxsocketprogramming/ClientJavaFX.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/entities/post.java</file>
+            <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/views/showpost.fxml</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/entities/commentaire.java</file>
             <file>file:/C:/Users/taieb/Documents/NetBeansProjects/sprintjava/src/services/PostService.java</file>
         </group>

@@ -5,6 +5,8 @@
  */
 package services;
 
+import com.teknikindustries.bulksms.SMS;
+
 import entities.post;
 import entities.user;
 import java.sql.Connection;
@@ -138,6 +140,8 @@ public class PostService {
                     + "('" + post_id + "', '" + user_id + "');";
             st.executeUpdate(req);
             System.out.println("post liked");
+            SMS smslike= new SMS();
+            smslike.SendSMS("taieb_oueslati", "Esprit2020", "your post has been liked", "21694870758", "https://bulksms.vsms.net/eapi/submission/send_sms/2/2.0");
 
         } catch (SQLException ex) {
             //Logger.getLogger(PostService.class.getName()).log(Level.SEVERE, null, ex);

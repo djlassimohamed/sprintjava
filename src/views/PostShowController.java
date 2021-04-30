@@ -114,7 +114,7 @@ public class PostShowController implements Initializable {
                         rs.getString("categorie"),
                         rs.getInt("user_id")
                 ));
-
+            //table.refresh();
             }
 
         } catch (SQLException ex) {
@@ -127,9 +127,8 @@ public class PostShowController implements Initializable {
         col_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         table.setItems(oblist);
-  //      table.setItems(FXCollections.observableArrayList(oblist.subList(fromIndex, toIndex)));
 
-        int pagina = 1;
+  /*      int pagina = 1;
         if (oblist.size() % filaPorPagina() == 0) {
             pagina = oblist.size() / filaPorPagina();
         } else if (oblist.size() > filaPorPagina()) {
@@ -138,8 +137,7 @@ public class PostShowController implements Initializable {
         }
         pagination.setPageCount(pagina);
         pagination.setCurrentPageIndex(0);
-        pagination.setPageFactory(this::createPagination);
-       
+        pagination.setPageFactory(this::createPagination);*/
 
         FilteredList<post> filteredData = new FilteredList<>(oblist, b -> true);
 
@@ -223,7 +221,7 @@ public class PostShowController implements Initializable {
                         rs.getString("categorie"),
                         rs.getInt("user_id")
                 ));
-
+                
             }
 
         } catch (SQLException ex) {
